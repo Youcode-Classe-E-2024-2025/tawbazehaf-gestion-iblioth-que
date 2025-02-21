@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Employer;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Book>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\[Job]>
  */
 class BookFactory extends Factory
 {
@@ -17,7 +19,9 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->sentence(2),
+            'user_id'=>User::factory(),
+            'price' => fake()->numberBetween(250, 300),
         ];
     }
 }

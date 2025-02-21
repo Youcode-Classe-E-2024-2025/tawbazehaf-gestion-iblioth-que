@@ -3,67 +3,94 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
-    public function index()
-    {
-        $books = Book::all();
-        return view('books.index', compact('books'));
+    public function index(){
+        if(!Auth::user()){
+            return redirect('/');
+        }
+        $books = Book::with('user')->latest()->Paginate(9);
+        return view('books.index', ['books' => $books]);
     }
 
-    public function create()
-    {
+    public function create(){
+        if(Auth::user()->role !== 'admin'){
+            return redirect('/books');
+        }
         return view('books.create');
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'description' => 'required|string',
-            'stock' => 'required|integer|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+    public function store(){
+        request()->validate([
+            'title'=>['required', 'min:3'],
+            'price' => ['required']
         ]);
-
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('books', 'public');
-        }
-
-        Book::create($validated);
-
-        return redirect()->route('admin.dashboard')->with('success', 'Book added successfully!');
-    }
-
-    public function edit(Book $book)
-    {
-        return view('books.edit', compact('book'));
-    }
-
-    public function update(Request $request, Book $book)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'description' => 'required|string',
-            'stock' => 'required|integer|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+    
+        Book::create([
+            'title' => request('title'),
+            'price'=> request('price'),
+            'user_id'=>null
         ]);
-
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('books', 'public');
-        }
-
-        $book->update($validated);
-
-        return redirect()->route('admin.dashboard')->with('success', 'Book updated successfully!');
+        return redirect('/books');
     }
 
-    public function destroy(Book $book)
-    {
+    public function show(Book $book){
+        return view("books.show", ["book" => $book]);
+    }
+
+    public function edit(Book $book){
+        if(Auth::user()->role !== 'admin'){
+            return redirect('/books/'. $book->id);
+        }
+        return view("books.edit", ["book" => $book]);
+    }
+
+    public function update(Book $book){
+        request()->validate([
+            'title' => ['required', 'min:3'],
+            'price' => ['required']
+        ]);
+    
+        $book->title = request('title');
+        $book->price = request('price');
+        $book->save();
+    
+        // OR
+    
+        // $book->update([
+        //     'title' => request('title'),
+        //     'price' => request('price')
+        // ]);
+    
+        return redirect('/books/' . $book->id); 
+    }
+
+    public function destroy(Book $book){
+        if(Auth::user()->role !== 'admin'){
+            return redirect('/books/'. $book->id);
+        }
         $book->delete();
-        return redirect()->route('admin.dashboard')->with('success', 'Book deleted successfully!');
+        return redirect('/books');
+    }
+
+    public function loan(Book $book){
+        if($book->user_id === null){
+            $book->user_id = Auth::id();
+        }
+
+        elseif ($book->user_id == Auth::id()) {
+            $book->user_id = null;
+        }
+
+        else {
+            abort(403, 'Unauthorized action');
+        }
+
+        $book->save();
+
+        return redirect('/books/' . $book->id);
     }
 }
