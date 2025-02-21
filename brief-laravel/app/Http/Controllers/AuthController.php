@@ -34,17 +34,17 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->route('users.show', Auth::id());
         }
-
+    
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
-
+    
     public function logout(Request $request)
     {
         Auth::logout();

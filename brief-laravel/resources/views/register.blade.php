@@ -18,7 +18,15 @@
 
         <form method="POST" action="{{ route('register.post') }}" class="space-y-4">
             @csrf
-            <!-- CSRF Token for security -->
+            @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <div class="mb-4">
                 <label for="name" class="block text-gray-700">Nom complet</label>
                 <input type="text" id="name" name="name"

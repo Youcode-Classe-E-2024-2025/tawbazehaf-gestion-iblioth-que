@@ -20,15 +20,18 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'quantity' => 'required|integer',
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'author' => 'required|max:255',
+            'description' => 'required',
         ]);
 
-        Book::create($request->all());
-        return redirect()->route('books.index')->with('success', 'Book created successfully.');
+        Book::create($validated);
+        return redirect()->route('books.index');
     }
 
-    // Add edit, update, and destroy methods as needed
+    public function show(Book $book)
+    {
+        return view('books.show', compact('book'));
+    }
 }
