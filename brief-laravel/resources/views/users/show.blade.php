@@ -1,3 +1,4 @@
+<script src="https://cdn.tailwindcss.com"></script>
 <div class="container mx-auto px-6 py-8">
     <div class="bg-white rounded-lg shadow-lg p-8">
         <h2 class="text-3xl font-semibold text-gray-800 mb-6">Profile de {{ $user->name }}</h2>

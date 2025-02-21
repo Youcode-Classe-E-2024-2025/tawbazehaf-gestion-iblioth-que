@@ -20,15 +20,21 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
+        if (!auth()->user()->is_admin) {
+            abort(403);
+        }
+        
         $validated = $request->validate([
-            'title' => 'required|max:255',
-            'author' => 'required|max:255',
+            'title' => 'required',
+            'author' => 'required',
             'description' => 'required',
+            'quantity' => 'required|numeric'
         ]);
-
+        
         Book::create($validated);
         return redirect()->route('books.index');
     }
+    
 
     public function show(Book $book)
     {

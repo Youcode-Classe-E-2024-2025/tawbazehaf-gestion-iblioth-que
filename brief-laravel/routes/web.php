@@ -33,10 +33,18 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.po
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 // Protected routes
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('users', UserController::class);
+    Route::resource('books', BookController::class)->except(['index', 'show']);
+    Route::patch('/borrows/{borrow}/approve', [BorrowController::class, 'approve']);
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::post('/books/{book}/borrow', [BorrowController::class, 'store']);
+});
+
+Route::get('/books', [BookController::class, 'index']);
+Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
 Route::resource('books', BookController::class);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
