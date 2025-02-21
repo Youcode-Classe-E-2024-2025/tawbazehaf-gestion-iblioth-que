@@ -9,23 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function showLogin()
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
+        return view('auth.login');
+    }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        Auth::login($user);
-
-        return redirect('/')->with('success', 'Registration successful!');
+    public function showRegister()
+    {
+        return view('auth.register');
     }
 
     public function login(Request $request)
@@ -34,28 +25,40 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
-    
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-    
+
             if (Auth::user()->is_admin) {
                 return redirect()->route('admin.dashboard');
             }
-    
+
             return redirect()->intended('/');
         }
-    
+
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Invalid credentials.',
         ]);
     }
-//     protected function authenticated($request, $user)
-// {
-//     if($user->is_admin) {
-//         return redirect()->route('admin.dashboard');
-//     }
-//     return redirect()->route('home');
-// }
+
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        Auth::login($user);
+
+        return redirect('/');
+    }
 
     public function logout(Request $request)
     {

@@ -20,24 +20,50 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        if (!auth()->user()->is_admin) {
-            abort(403);
-        }
-        
         $validated = $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'description' => 'required',
-            'quantity' => 'required|numeric'
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'description' => 'required|string',
+            'stock' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-        
-        Book::create($validated);
-        return redirect()->route('books.index');
-    }
-    
 
-    public function show(Book $book)
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('books', 'public');
+        }
+
+        Book::create($validated);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Book added successfully!');
+    }
+
+    public function edit(Book $book)
     {
-        return view('books.show', compact('book'));
+        return view('books.edit', compact('book'));
+    }
+
+    public function update(Request $request, Book $book)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'description' => 'required|string',
+            'stock' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('books', 'public');
+        }
+
+        $book->update($validated);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Book updated successfully!');
+    }
+
+    public function destroy(Book $book)
+    {
+        $book->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Book deleted successfully!');
     }
 }

@@ -2,45 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Borrow;
 use Illuminate\Http\Request;
 
 class BorrowController extends Controller
 {
-    public function index()
+    public function borrow(Book $book)
     {
-        $borrowings = Borrowing::all();
-        return view('borrowings.index', compact('borrowings'));
-    }
+        if ($book->stock > 0) {
+            Borrow::create([
+                'user_id' => auth()->id(),
+                'book_id' => $book->id,
+                'borrowed_at' => now(),
+            ]);
 
-    public function create()
-    {
-        return view('borrowings.create');
-    }
+            $book->decrement('stock');
 
-
-    public function store(Request $request, Book $book)
-    {
-        $borrow = Borrow::create([
-            'user_id' => auth()->id(),
-            'book_id' => $book->id,
-            'status' => 'pending'
-        ]);
-        
-        return redirect()->back()->with('success', 'Borrow request sent!');
-    }
-
-
-
-    public function approve(Borrow $borrow)
-    {
-        if (!auth()->user()->is_admin) {
-            abort(403);
+            return back()->with('success', 'Book borrowed successfully!');
         }
-        
-        $borrow->update(['status' => 'approved']);
-        return redirect()->back();
+
+        return back()->with('error', 'Book not available.');
     }
 
-    // Add edit, update, and destroy methods as needed
+    public function return(Book $book)
+    {
+        $borrow = Borrow::where('user_id', auth()->id())
+            ->where('book_id', $book->id)
+            ->whereNull('returned_at')
+            ->first();
+
+        if ($borrow) {
+            $borrow->update(['returned_at' => now()]);
+            $book->increment('stock');
+            return back()->with('success', 'Book returned successfully!');
+        }
+
+        return back()->with('error', 'No active borrow found.');
+    }
 }
