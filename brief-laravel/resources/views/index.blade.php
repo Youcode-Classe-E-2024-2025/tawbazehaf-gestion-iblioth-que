@@ -18,6 +18,11 @@
                 <a href="{{ route('login') }}" class="hover:text-gray-200">Se connecter</a>
                 <a href="{{ route('register') }}" class="hover:text-gray-200">S'inscrire</a>
             </nav>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="text-white hover:text-gray-200">Logout</button>
+            </form>
+
         </div>
     </header>
 

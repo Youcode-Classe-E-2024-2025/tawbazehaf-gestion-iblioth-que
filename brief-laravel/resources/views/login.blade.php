@@ -15,8 +15,9 @@
         <h2 class="text-3xl font-semibold text-center mb-6">Connexion à la Bibliothèque</h2>
 
         <!-- Formulaire de connexion -->
-        <form action="{{ route('login') }}" method="POST">
-            @csrf <!-- CSRF Token for security -->
+        <form method="POST" action="{{ route('login.post') }}" class="space-y-4">
+            @csrf
+            <!-- CSRF Token for security -->
             <div class="mb-4">
                 <label for="email" class="block text-gray-700">Adresse e-mail</label>
                 <input type="email" id="email" name="email"

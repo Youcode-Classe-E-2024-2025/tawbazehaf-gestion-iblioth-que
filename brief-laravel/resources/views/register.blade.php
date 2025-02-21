@@ -15,8 +15,10 @@
         <h2 class="text-3xl font-semibold text-center mb-6">Créer un compte</h2>
 
         <!-- Formulaire d'inscription -->
-        <form action="{{ route('register') }}" method="POST">
-            @csrf <!-- CSRF Token for security -->
+
+        <form method="POST" action="{{ route('register.post') }}" class="space-y-4">
+            @csrf
+            <!-- CSRF Token for security -->
             <div class="mb-4">
                 <label for="name" class="block text-gray-700">Nom complet</label>
                 <input type="text" id="name" name="name"
