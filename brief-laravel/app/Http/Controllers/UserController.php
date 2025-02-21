@@ -23,7 +23,6 @@ class UserController extends Controller
     {
         return view('users.create');
     }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -31,17 +30,19 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
-
+    
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-
+    
         Auth::login($user);
-        return redirect()->route('users.index')->with('success', 'User registered successfully.');
+    
+        // Redirect to the user's profile after registration
+        return redirect()->route('users.show', ['user' => $user->id])
+                         ->with('success', 'User registered successfully.');
     }
-
     public function logout()
     {
         Auth::logout();
