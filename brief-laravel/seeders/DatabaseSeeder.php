@@ -1,6 +1,18 @@
-public function run()
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
+class DatabaseSeeder extends Seeder
 {
-$this->call([
-AdminSeeder::class
-]);
+    public function run()
+    {
+        $this->call([
+            AdminSeeder::class,
+            BookSeeder::class
+        ]);
+    }
 }

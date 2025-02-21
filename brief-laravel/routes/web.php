@@ -7,9 +7,11 @@ use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\UserController;
 
 // Public routes
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+// Route::get('/', function () {
+//     return view('index');
+// })->name('home');
+
+Route::get('/', [HomeController::class, 'index']);
 
 // Auth routes
 Route::middleware('guest')->group(function () {
@@ -28,7 +30,11 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin routes
+// Route::middleware(['auth', 'admin'])->group(function () {
+//     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+//     Route::resource('books', BookController::class)->except(['index', 'show']);
+// });
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::resource('books', BookController::class)->except(['index', 'show']);
+    Route::resource('users', UserController::class);
+    Route::resource('books', BookController::class);
 });

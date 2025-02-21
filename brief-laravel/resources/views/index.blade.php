@@ -76,27 +76,35 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Livre 1 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <img src="https://via.placeholder.com/150" alt="Livre"
+                    <img src="https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/ableson.jpg" alt="Livre"
                         class="w-full h-48 object-cover rounded-t-lg mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800">Titre du Livre</h3>
-                    <p class="text-gray-600">Une brève description du livre. Ce livre est très apprécié par nos
-                        lecteurs.</p>
+                    <h3 class="text-xl font-semibold text-gray-800">Unlocking Android</h3>
+                    <p class="text-gray-600">Unlocking Android: A Developer's Guide provides concise, hands-on
+                        instruction for the Android operating system and development tools. This book teaches important
+                        architectural concepts in a straightforward writing style and builds on this with practical and
+                        useful examples throughout.</p>
                 </div>
                 <!-- Livre 2 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <img src="https://via.placeholder.com/150" alt="Livre"
+                    <img src="https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/ahmed.jpg" alt="Livre"
                         class="w-full h-48 object-cover rounded-t-lg mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800">Titre du Livre</h3>
-                    <p class="text-gray-600">Une brève description du livre. Ce livre est très apprécié par nos
-                        lecteurs.</p>
+                    <h3 class="text-xl font-semibold text-gray-800">Flex 3 in Action</h3>
+                    <p class="text-gray-600">New web applications require engaging user-friendly interfaces and the
+                        cooler, the better. With Flex 3, web developers at any skill level can create high-quality,
+                        effective, and interactive Rich Internet Applications (RIAs) quickly and easily</p>
                 </div>
                 <!-- Livre 3 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <img src="https://via.placeholder.com/150" alt="Livre"
+                    <img src="https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/alag.jpg" alt="Livre"
                         class="w-full h-48 object-cover rounded-t-lg mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800">Titre du Livre</h3>
-                    <p class="text-gray-600">Une brève description du livre. Ce livre est très apprécié par nos
-                        lecteurs.</p>
+                    <h3 class="text-xl font-semibold text-gray-800">Collective Intelligence in Action</h3>
+                    <p class="text-gray-600">There's a great deal of wisdom in a crowd, but how do you listen to a
+                        thousand people talking at once Identifying the wants, needs, and knowledge of internet users
+                        can be like listening to a mob. In the Web 2.0 era, leveraging the collective power of user
+                        contributions, interactions, and feedback is the key to market dominance. A new category of
+                        powerful programming techniques lets you discover the patterns, inter-relationships, and
+                        individual profiles the collective intelligence locked in the data people leave behind as they
+                        surf websites, post blogs, and interact with other users.</p>
                 </div>
             </div>
         </div>
