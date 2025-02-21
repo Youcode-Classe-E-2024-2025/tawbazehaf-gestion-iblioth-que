@@ -19,33 +19,23 @@ class UserController extends Controller
         return view('users.show', compact('user'));
     }
 
-    public function create()
+    public function edit(User $user)
     {
-        return view('users.create');
+        $this->authorize('update', $user);
+        return view('users.edit', compact('user'));
     }
-    public function store(Request $request)
+
+    public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed',
+        $this->authorize('update', $user);
+        
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
         ]);
-    
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-    
-        Auth::login($user);
-    
-        // Redirect to the user's profile after registration
-        return redirect()->route('users.show', ['user' => $user->id])
-                         ->with('success', 'User registered successfully.');
-    }
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('login')->with('success', 'Logged out successfully.');
+
+        $user->update($validated);
+
+        return redirect()->route('users.show', $user)->with('success', 'Profile updated successfully!');
     }
 }
