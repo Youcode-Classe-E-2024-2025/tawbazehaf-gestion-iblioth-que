@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::post('logout', [UserController::class, 'logout'])->name('logout');
 });
+Route::resource('users', UserController::class);
 
 // Book routes
 Route::resource('books', BookController::class);
