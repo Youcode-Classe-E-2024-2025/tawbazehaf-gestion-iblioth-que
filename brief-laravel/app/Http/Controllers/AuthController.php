@@ -32,19 +32,31 @@ class AuthController extends Controller
     {
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required'
         ]);
     
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('users.show', Auth::id());
+    
+            if (Auth::user()->is_admin) {
+                return redirect()->route('admin.dashboard');
+            }
+    
+            return redirect()->intended('/');
         }
     
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
-    
+//     protected function authenticated($request, $user)
+// {
+//     if($user->is_admin) {
+//         return redirect()->route('admin.dashboard');
+//     }
+//     return redirect()->route('home');
+// }
+
     public function logout(Request $request)
     {
         Auth::logout();
