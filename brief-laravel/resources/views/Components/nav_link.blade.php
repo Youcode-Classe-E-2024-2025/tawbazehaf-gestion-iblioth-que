@@ -1,9 +1,5 @@
 @props(['active' => false])
-
-<a 
-    class="{{ $active ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-700 hover:text-white' }} cursor-pointer rounded-md px-3 py-2 text-sm font-medium"
-    {{ $attributes }}
->
+<a class="{{ $active ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-500 hover:bg-indigo-500 hover:text-white hover:shadow-lg' }} 
+    cursor-pointer rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 ease-in-out" {{ $attributes }}>
     {{ $slot }}
 </a>
-

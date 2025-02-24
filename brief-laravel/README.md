@@ -1,66 +1,106 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Gestion de Bibliothèque
+Ce projet est conçu pour vous permettre de mettre en pratique les bases de Laravel dans un contexte professionnel réaliste. Organisez-vous en équipe (ou individuellement, selon les instructions) et planifiez vos tâches afin de respecter le planning.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Configuration et Exécution du Projet Laravel
+Prérequis
+Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 
-## About Laravel
+PHP (à partir de la version recommandée par Laravel, voir PHP).
+Composer (télécharger ici).
+Node.js et npm (télécharger ici).
+MySQL (ou un autre SGBD compatible, ex: PostgreSQL).
+Laravel installé globalement (optionnel, peut être utilisé via Composer).
+Installation du projet
+1. Cloner le dépôt
+Ouvrez un terminal et exécutez :
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+git clone https://github.com/Youcode-Classe-E-2024-2025/tawbazehaf-gestion-iblioth-que.git
+cd brief-laravel 
+2. Installer les dépendances PHP
+Dans le dossier du projet, exécutez :
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+composer install
+3. Configurer le fichier .env
+Copiez le fichier .env.example et renommez-le en .env :
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+cp .env.example .env  # Linux/Mac
+copy .env.example .env # Windows
+Modifiez les paramètres de la base de données dans .env :
 
-## Learning Laravel
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5433
+DB_DATABASE=gestion_bibliotheque
+DB_USERNAME=postgres
+DB_PASSWORD=0660911893
+4. Générer la clé d'application
+Exécutez la commande suivante pour générer une clé unique :
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+php artisan key:generate
+5. Exécuter les migrations et seeders (si disponibles)
+Créez la base de données et appliquez les migrations :
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+php artisan migrate --seed
+6. Installer les dépendances front-end
+Installez les dépendances npm :
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+npm install
+Si votre projet utilise Vite, démarrez le build :
 
-## Laravel Sponsors
+npm run dev
+7. Démarrer le serveur local
+Utilisez la commande artisan pour démarrer le serveur Laravel :
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+php artisan serve
+Accédez au projet via : http://127.0.0.1:8000
 
-### Premium Partners
+8. Configuration supplémentaire (si nécessaire)
+Si vous utilisez Sail (environnement Docker pour Laravel) :
+./vendor/bin/sail up -d
+Si vous utilisez Horizon pour la gestion des files d'attente :
+php artisan horizon
+Votre projet est maintenant configuré et prêt à être utilisé 🚀
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Contexte du projet:
+Vous faites partie de l’équipe de développement de la Bibliothèque Municipale de la ville de Saint-Marc. Dans le but de moderniser ses services, la bibliothèque souhaite digitaliser la gestion de ses ressources. Votre mission est de développer une application web simple qui permettra de gérer les livres et les emprunts.
 
-## Contributing
+Fonctionnalités requises
+Vous devez développer une application web en Laravel qui permette de :
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Gérer l'authentification :
 
-## Code of Conduct
+S'inscrire.
+Se connecter.
+Se déconnecter.
+Afficher les profils.
+Gérer les livres :
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Afficher la liste des livres disponibles.
+Ajouter de nouveaux livres.
+Modifier ou supprimer des livres existants.
+Gérer les emprunts :
 
-## Security Vulnerabilities
+Enregistrer les emprunts et retours de livres.
+Modalités pédagogiques
+Type : Individuel
+Début du Projet : 17/02/2025 - 09:45
+Date de Remise : 21/02/2025 - 17:00
+Soutenance : 24/02/2025
+Livrables
+Code Source : Le projet complet hébergé sur un repository Git (ex. GitHub, GitLab).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Documentation : Un document expliquant le fonctionnement de l’application et les choix techniques réalisés.
 
-## License
+(Optionnel) Rapport de Test : Un bref rapport sur les tests effectués et les bugs identifiés/corrigés.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Critères de performance
+Respect du brief : Adhérence aux consignes et fonctionnalités demandées.
+
+Qualité du Code : Lisibilité, propreté, utilisation appropriée des concepts Laravel.
+
+Fonctionnalités : Bonne implémentation des fonctionnalités de gestion des livres et des emprunts.
+
+Documentation : Clarté et pertinence des explications fournies.
+
+Gestion de Projet : Utilisation efficace de Git (commits fréquents, messages explicites).
+
