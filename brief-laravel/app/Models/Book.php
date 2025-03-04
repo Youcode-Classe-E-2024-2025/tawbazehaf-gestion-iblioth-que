@@ -9,7 +9,7 @@ class Book extends Model{
 
     protected $fillable = ['title', 'price', 'user_id'];
 
-    // protected $guarded = [];
+    
 
     public function user(){
         return $this->belongsTo(User::class);

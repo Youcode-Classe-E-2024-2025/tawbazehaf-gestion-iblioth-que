@@ -1,5 +1,12 @@
 @props(['active' => false])
-<a class="{{ $active ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-500 hover:bg-indigo-500 hover:text-white hover:shadow-lg' }} 
-    cursor-pointer rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 ease-in-out" {{ $attributes }}>
+
+<a 
+    {{ $attributes->merge([
+        'class' => 'inline-flex items-center transition-colors duration-200 rounded-md px-3 py-2 text-sm font-medium ' . 
+        ($active 
+            ? 'bg-purple-600 text-white shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2' 
+            : 'text-gray-700 hover:bg-purple-50 hover:text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-100')
+    ]) }}
+>
     {{ $slot }}
 </a>
